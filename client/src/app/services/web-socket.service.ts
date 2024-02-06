@@ -12,4 +12,9 @@ export class WebSocketService {
   updateInterval(interval: number): void {
     this.webSocketSubject.next(JSON.stringify(interval));
   }
+
+  create(name:string){
+    this.webSocketSubject.next(name)
+  }
+
 }

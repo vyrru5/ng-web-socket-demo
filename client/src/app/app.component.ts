@@ -5,10 +5,11 @@ import { Chart } from 'chart.js/auto';
 import { catchError, retry, throwError } from 'rxjs';
 import { ChartService } from './services/chart.service';
 import { WebSocketService } from './services/web-socket.service';
+import {JsonPipe} from "@angular/common";
 
 @Component({
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, JsonPipe],
   selector: 'app-root',
   styleUrls: ['./app.component.css'],
   templateUrl: './app.component.html',
@@ -16,6 +17,8 @@ import { WebSocketService } from './services/web-socket.service';
 export class AppComponent implements AfterViewInit {
   public interval: number = 1;
   public chart!: Chart;
+
+  xx='a'
 
   constructor(
     private ws: WebSocketService,
@@ -30,8 +33,10 @@ export class AppComponent implements AfterViewInit {
         retry({ delay: 5_000 }),
         takeUntilDestroyed()
       )
-      .subscribe((value: string) => {
-        this.chartService.addData(this.chart, this.interval, parseInt(value));
+      .subscribe((value:any) => {
+        console.log('valeur',value)
+        this.xx = value
+        //this.chartService.addData(this.chart, this.interval, parseInt(value));
       });
   }
 
@@ -43,4 +48,12 @@ export class AppComponent implements AfterViewInit {
     this.interval = interval;
     this.ws.updateInterval(interval);
   }
+
+  createNotif(){
+    const name=`plop ${new Date().getTime()}`
+    console.log('click on go create button with name',name)
+    this.ws.create(name)
+  }
+
+
 }

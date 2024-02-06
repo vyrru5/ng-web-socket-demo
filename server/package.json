@@ -2,6 +2,7 @@
    "name": "ng-web-socket-server",
    "version": "1.0.0",
    "dependencies": {
+      "nodemon": "^3.0.3",
       "ws": "^8.13.0"
    }
 }
